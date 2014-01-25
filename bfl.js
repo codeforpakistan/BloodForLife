@@ -52,91 +52,81 @@ if (Meteor.isServer) {
 				if (Object.prototype.toString.call(rawIn) == "[object Object]") {
 						sms.insert(rawIn);
 				}
-
-				var requests = {};
-				if (rawIn.Body) {
-						requests.inputQuestion = rawIn.Body;
-						requests.source = "sms";
-				} else if (rawIn.TranscriptionText) {
-						requests.inputQuestion = rawIn.TranscriptionText;
-						requests.source = "voicemail";
-				} else {
-						return;
-				}
-				requests.inputName = rawIn.From;
-				requests.to = rawIn.To;
-				
-				var rawIn = this.request.body;
+			  	
+				var string = this.request.body;
+				var q = string.split(" ");
+				console.log(donor.find({blood_group:q[0] , city : q[1]}).fetch());
 				var xml = '<Response><Sms>Thank you for submitting your question!</Sms></Response>';
 				return [200, {"Content-Type": "text/xml"}, xml];
 		});	
 		var exportCSV = function(responseStream){
 
 				var userStream = createStream();
-				     var fut = new Future();
-				         var users = {};
-				//
-				                CSV().from(userStream)
-				                    .to(responseStream)
-				                        .transform(function(user, index){
-				                            if(user._id){
-				                                    var dateCreated = new Date(user.createdAt);
-				                                            return [user.profile.name, user.emails[0].address, dateCreated.toString()];
-				                                                }else
-				                                                        return user;
-				                                                            })
-				                                                                .on('error', function(error){
-				                                                                        log.error('Error streaming CSV export: ', error.message);
-				                                                                            })
-				                                                                                .on('end', function(count){
-				                                                                                        responseStream.end();
-				                                                                                                fut.ret();
-				                                                                                                    });
-				
-				                                                                                                        //Write table headings for CSV to stream.
-				                                                                                                            userStream.write(["Name", "Email", "Date Created"]);
-				
-				                                                                                                                users = Users.find({})
-				
-				                                                                                                                    //Pushing each user into the stream, If we could access the MongoDB driver we could
-				                                                                                                                        //convert the Cursor into a stream directly, making this a lot cleaner.
-				                                                                                                                            users.forEach(function (user) {
-				                                                                                                                                    userStream.write(user); //Stream transform takes care of cleanup and formatting.
-				                                                                                                                                            count += 1;
-				                                                                                                                                                    if(count >= users.count())
-				                                                                                                                                                                userStream.end();
-				                                                                                                                                                                    });
-				
-				                                                                                                                                                                        return fut.wait();
-				                                                                                                                                                                        };
-				
-				                                                                                                                                                                        //Creates and returns a Duplex(Read/Write) Node stream
-				                                                                                                                                                                        //Used to pipe users from .find() Cursor into our CSV stream parser.
-				                                                                                                                                                                        var createStream = function(){
-				                                                                                                                                                                            var stream = Npm.require('stream');
-				                                                                                                                                                                               var myStream = new stream.Stream();
-				                                                                                                                                                                                    myStream.readable = true;
-				                                                                                                                                                                                        myStream.writable = true;
-								                                                                                                                                                                                            myStream.write = function (data) {
-				                                                                                                                                                                                                    myStream.emit('data', data);
-				                                                                                                                                                                                                            return true; // true means 'yes i am ready for more data now'
-				                                                                                                                                                                                                                    // OR return false and emit('drain') when ready later
-				                                                                                                                                                                                                                       };
-				
-				                                                                                                                                                                                                                            myStream.end = function (data) {
-				                                                                                                                                                                                                                                    //Node convention to emit last data with end
-				                                                                                                                                                                                                                                            if (arguments.length)
-				                                                                                                                                                                                                                                                        myStream.write(data);
-				
-				                                                                                                                                                                                                                                                                // no more writes after end
-				                                                                                                                                                                                                                                                                        myStream.writable = false;
-				                                                                                                                                                                                                                                                                                myStream.emit('end');
-				                                                                                                                                                                                                                                                                                    };
-				
-				                                                                                                                                                                                                                                                                                        myStream.destroy = function () {
-				                                                                                                                                                                                                                                                                                                myStream.writable = false;
-				                                                                                                                                                                                                                                                                                                    };
-				
-				                                                                                                                                                                                                                                                                                                        return myStream;
-				                                                                                                                                                                                                                                                                                                       };
-		}
+				var fut = new Future();
+				var users = {};
+
+				CSV().from(userStream)
+				.to(responseStream)
+				.transform(function(user, index){
+						if(user._id){
+								console.log(user);
+								//var dateCreated = new Date(user.createdAt);
+								//return [user.profile.name, user.emails[0].address, dateCreated.toString()];
+						}else
+								return user;
+				})
+				.on('error', function(error){
+						log.error('Error streaming CSV export: ', error.message);
+				})
+				.on('end', function(count){
+						responseStream.end();
+						fut.ret();
+				});
+
+				//Write table headings for CSV to stream.
+				userStream.write(["Name", "Email", "Date Created"]);
+
+				users = Users.find({})
+
+				//Pushing each user into the stream, If we could access the MongoDB driver we could
+				//convert the Cursor into a stream directly, making this a lot cleaner.
+				users.forEach(function (user) {
+						userStream.write(user); //Stream transform takes care of cleanup and formatting.
+						count += 1;
+						if(count >= users.count())
+								userStream.end();
+				});
+
+				return fut.wait();
+		};
+
+		//Creates and returns a Duplex(Read/Write) Node stream
+		//Used to pipe users from .find() Cursor into our CSV stream parser.
+		var createStream = function(){
+				var stream = Npm.require('stream');
+				var myStream = new stream.Stream();
+				myStream.readable = true;
+				myStream.writable = true;
+				myStream.write = function (data) {
+						myStream.emit('data', data);
+						return true; // true means 'yes i am ready for more data now'
+						// OR return false and emit('drain') when ready later
+				};
+
+				myStream.end = function (data) {
+						//Node convention to emit last data with end
+						if (arguments.length)
+								myStream.write(data);
+
+						// no more writes after end
+						myStream.writable = false;
+						myStream.emit('end');
+				};
+
+				myStream.destroy = function () {
+						myStream.writable = false;
+				};
+
+				return myStream;
+		};
+}
