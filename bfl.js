@@ -61,10 +61,8 @@ if (Meteor.isServer) {
 				var curr_date = d.getDate();
 				var curr_month = d.getMonth();
 				var curr_year = d.getFullYear();
-				console.log(donor.find({blood_group:q[0] , city : q[1], last_bleed : { $lte : curr_date + "-" + curr_month + "-" + curr_year }}).fetch());
-				var xml = '<Response><Sms>';
-				xml += ' '
-				xml += '</Sms></Response>';
+				console.log(donor.find().fetch().length);
+				var xml = '<Response><Sms>Hello</Sms></Response>';
 				return [200, {"Content-Type": "text/xml"}, xml];
 		});	
 		var exportCSV = function(responseStream){
