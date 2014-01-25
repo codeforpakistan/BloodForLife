@@ -42,7 +42,7 @@ if (Meteor.isServer) {
 		Meteor.Router.add('/api/sms', 'POST', function() {
 				var rawIn = this.request.body;
 				if (Object.prototype.toString.call(rawIn) == "[object Object]") {
-						requests.insert(rawIn);
+						sms.insert(rawIn);
 				}
 
 				var requests = {};
@@ -58,7 +58,6 @@ if (Meteor.isServer) {
 				requests.inputName = rawIn.From;
 				requests.to = rawIn.To;
 				
-				requests.insert(requests);
 
 				var rawIn = this.request.body;
 				var xml = '<Response><Sms>Thank you for submitting your question!</Sms></Response>';
