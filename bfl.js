@@ -12,10 +12,11 @@ if (Meteor.isClient) {
   });
 }
 
+twilio = Twilio('ACd539ed39721dd42d527664c8f83404de', '34fc16b33ad93e415c06e63c735a8142');
+
 if (Meteor.isServer) {
 	Meteor.startup(function () {
 		// code to run on server at startup
-		twilio = Twilio('ACd539ed39721dd42d527664c8f83404de', '34fc16b33ad93e415c06e63c735a8142');
 	});
 	Meteor.methods({
 		'sendSms' : function (arg1, arg2){
@@ -34,15 +35,42 @@ if (Meteor.isServer) {
 
 		}
 	});
-	Router.map(function () {
-			this.route('twilioSms', {
-					where: 'server',
-					action: function () {
-							this.response.writeHeader(200, {"Content-Type": "text/xml"});  
-							this.response.write('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hi!</Message></Response>');  
-							this.response.end();
-							// some special server side properties are available here
-					}
+	
+	Meteor.Router.add('/api/sms', 'POST', function() {
+			var rawIn = this.request.body;
+			if (Object.prototype.toString.call(rawIn) == "[object Object]") {
+					twilioRawIn.insert(rawIn);
+			}
+			console.log('test');
+			var question = {};
+			if (rawIn.Body) {
+					question.inputQuestion = rawIn.Body;
+					question.source = "sms";
+			} else if (rawIn.TranscriptionText) {
+					question.inputQuestion = rawIn.TranscriptionText;
+					question.source = "voicemail";
+			} else {
+					return;
+			}
+			question.inputName = rawIn.From;
+
+			var toOrig = rawIn.To;
+			toOrig = toOrig.replace(/\+1/g, "");
+			var toPretty = '('+toOrig.substr(0,3)+') '+toOrig.substr(3,3)+'-'+toOrig.substr(6,10);
+			var eventDetails = Events.findOne({phone: toPretty});
+
+			if (_.size(eventDetails) == 0) {
+					return;
+			} else {
+					question.slug = eventDetails.slug;
+			}
+
+			Meteor.call('questionCreate', question, function(error, res) {
+
 			});
+
+			var xml = '<Response><Sms>Thank you for submitting your question!</Sms></Response>';
+			return [200, {"Content-Type": "text/xml"}, xml];
 	});
+
 }

@@ -9,4 +9,4 @@ insecure
 preserve-inputs
 moment
 twilio-meteor
-iron-router
+router

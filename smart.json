@@ -2,6 +2,6 @@
   "packages": {
     "moment": {},
     "twilio-meteor": {},
-    "iron-router": {}
+    "router": {}
   }
 }
