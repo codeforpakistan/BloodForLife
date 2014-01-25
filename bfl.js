@@ -39,7 +39,7 @@ if (Meteor.isServer) {
 					where: 'server',
 					action: function () {
 							this.response.writeHeader(200, {"Content-Type": "text/xml"});  
-							this.response.write('<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello</Say></Response>');  
+							this.response.write('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hi!</Message></Response>');  
 							this.response.end();
 							// some special server side properties are available here
 					}
