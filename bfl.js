@@ -1,3 +1,5 @@
+var requests = new Meteor.Collection("requests");
+
 if (Meteor.isClient) {
 		Template.hello.greeting = function () {
 				return "Welcome to bfl.";
@@ -10,9 +12,11 @@ if (Meteor.isClient) {
 								console.log("You pressed the button");
 				}
 		});
+		Meteor.subscribe("requests");
 }
 
 if (Meteor.isServer) {
+		Meteor.publish("requests");
 		Meteor.startup(function () {
 				// code to run on server at startup
 				twilio = Twilio('ACd539ed39721dd42d527664c8f83404de', '34fc16b33ad93e415c06e63c735a8142');
@@ -36,6 +40,26 @@ if (Meteor.isServer) {
 		});
 
 		Meteor.Router.add('/api/sms', 'POST', function() {
+				var rawIn = this.request.body;
+				if (Object.prototype.toString.call(rawIn) == "[object Object]") {
+						requests.insert(rawIn);
+				}
+
+				var requests = {};
+				if (rawIn.Body) {
+						requests.inputQuestion = rawIn.Body;
+						requests.source = "sms";
+				} else if (rawIn.TranscriptionText) {
+						requests.inputQuestion = rawIn.TranscriptionText;
+						requests.source = "voicemail";
+				} else {
+						return;
+				}
+				requests.inputName = rawIn.From;
+				requests.to = rawIn.To;
+				
+				requests.insert(requests);
+
 				var rawIn = this.request.body;
 				var xml = '<Response><Sms>Thank you for submitting your question!</Sms></Response>';
 				return [200, {"Content-Type": "text/xml"}, xml];
