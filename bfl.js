@@ -1,3 +1,4 @@
+twilioRawIn = new Meteor.Collection("rawin");
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
     return "Welcome to bfl.";
@@ -10,6 +11,7 @@ if (Meteor.isClient) {
         console.log("You pressed the button");
     }
   });
+	Meteor.subscribe("rawin")
 }
 
 
@@ -17,6 +19,7 @@ if (Meteor.isServer) {
 	Meteor.startup(function () {
 		// code to run on server at startup
 			twilio = Twilio('ACd539ed39721dd42d527664c8f83404de', '34fc16b33ad93e415c06e63c735a8142');
+			Meteor.publish("rawin");
 	});
 	Meteor.methods({
 		'sendSms' : function (arg1, arg2){
