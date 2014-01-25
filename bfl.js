@@ -55,7 +55,12 @@ if (Meteor.isServer) {
 			  	
 				var string = this.request.body.Body;
 				var q = string.split(" ");
-				console.log(donor.find({blood_group:q[0] , city : q[1]}).fetch());
+				var d = new Date();
+				d.setMonth(-6);
+				var curr_date = d.getDate();
+				var curr_month = d.getMonth();
+				var curr_year = d.getFullYear();
+				console.log(donor.find({blood_group:q[0] , city : q[1]}).fetch() , last_bleed : { $lte : gtcurr_date + "-" + curr_month + "-" + curr_year });
 				var xml = '<Response><Sms>Thank you for submitting your question!</Sms></Response>';
 				return [200, {"Content-Type": "text/xml"}, xml];
 		});	
