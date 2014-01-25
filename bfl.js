@@ -1,4 +1,4 @@
-var requests = new Meteor.Collection("requests");
+sms = new Meteor.Collection("requests");
 
 if (Meteor.isClient) {
 		Template.hello.greeting = function () {
@@ -16,9 +16,9 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-		Meteor.publish("requests");
 		Meteor.startup(function () {
 				// code to run on server at startup
+				Meteor.publish("requests");
 				twilio = Twilio('ACd539ed39721dd42d527664c8f83404de', '34fc16b33ad93e415c06e63c735a8142');
 		});
 		Meteor.methods({
