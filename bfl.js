@@ -57,7 +57,7 @@ if (Meteor.isServer) {
 				var q = string.split(" ");
 				var d = new Date();
 				d.setMonth(-6);
-				console.log(d.toString());
+				console.log(q);
 				var curr_date = d.getDate();
 				var curr_month = d.getMonth();
 				var curr_year = d.getFullYear();
