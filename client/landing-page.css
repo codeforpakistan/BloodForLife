@@ -33,6 +33,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 .intro-message > h1 {
 	margin: 0;
+	color:black;
 	font-size: 5em;
 	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
@@ -44,9 +45,12 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .intro-message > h3 {
+	color: black;
 	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
-
+.intro-message h3, .intro-message h5  {
+	color: black;
+}
 @media (max-width: 767px) {
 	.intro-message {
 		padding-bottom: 15%;
