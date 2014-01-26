@@ -1,9 +1,18 @@
 /* CSS declarations go here */
 .dataTables_paginate li{
- float:left;
- padding: 0px 20px;
- list-style: none;
+	float:left;
+	padding: 0px 20px;
+	list-style: none;
 }
 .dataTables_paginate li.active a{
- color:black;
+	color:black;
+}
+.dataTables_filter{
+	position: absolute;
+	bottom: -37px;
+	left: 200px;
+}
+.dataTables_length{
+	position: absolute;
+	bottom: -33px;
 }
