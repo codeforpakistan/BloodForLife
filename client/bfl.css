@@ -1,0 +1,9 @@
+/* CSS declarations go here */
+.dataTables_paginate li{
+ float:left;
+ padding: 0px 20px;
+ list-style: none;
+}
+.dataTables_paginate li.active a{
+ color:black;
+}

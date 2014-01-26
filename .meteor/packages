@@ -12,3 +12,8 @@ twilio-meteor
 router
 node-csv-npm
 csv-to-collection
+font-awesome
+bootstrap-3
+datatables
+accounts-base
+accounts-password

@@ -6,7 +6,10 @@
       "twilio-meteor": {},
       "router": {},
       "node-csv-npm": {},
-      "csv-to-collection": {}
+      "csv-to-collection": {},
+      "font-awesome": {},
+      "bootstrap-3": {},
+      "datatables": {}
     },
     "packages": {
       "moment": {
@@ -33,6 +36,21 @@
         "git": "https://github.com/livingyang/csv-to-collection.git",
         "tag": "v0.1.1",
         "commit": "0bda005e63e9573adf1d3e6ae419f376784f25e5"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v4.0.3",
+        "commit": "61e9361384347547ae144f8228faa4deffda23db"
+      },
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v0.3.7",
+        "commit": "5dd0d142c870647b910be80bc777b96f0dd45e5e"
+      },
+      "datatables": {
+        "git": "https://github.com/TimHeckel/meteor-datatables.git",
+        "tag": "v0.1.3",
+        "commit": "86a9076d6c65df85b098fd214b0c0ca7a1b10269"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
