@@ -46,9 +46,8 @@ body, h1, h2, h3, h4, h5, h6 {
 
 .intro-message > h3 {
 	color: black;
-	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
-.intro-message h3, .intro-message h5  {
+.intro-message h3, .intro-message h5, .intro-message h2   {
 	color: black;
 }
 @media (max-width: 767px) {
@@ -106,7 +105,6 @@ body, h1, h2, h3, h4, h5, h6 {
 .banner {
 	padding: 100px 0;
 	color: #f8f8f8;
-	background: url(../img/banner-bg.jpg) no-repeat center center;
 	background-size: cover;
 }
 
