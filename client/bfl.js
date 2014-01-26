@@ -106,7 +106,7 @@ Template.register.events({
 		var uid = donor.insert(Donor);
 		//Trim and validate the input
 
-			Accounts.createUser({email: email, password : password, profile : {did: uid, name: full_name}}, function(err){
+			Accounts.createUser({email: email, password : password, profile : {did: uid, name: t.find('#name').value}}, function(err){
 				if (err) {
 					// Inform the user that account creation failed
 				} else {
