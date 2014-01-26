@@ -92,7 +92,7 @@ Template.register.events({
 
 		var Donor = {
 			blood_group : t.find('#blood_group option:selected').value,
-			title : t.find('#title option:selected').value,
+			//title : t.find('#title option:selected').value,
 			full_name : t.find('#name').value,
 			gender : t.find('#sex input[type=radio]:checked').value,
 			dob : t.find('#dob').value,
