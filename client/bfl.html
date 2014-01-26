@@ -202,27 +202,27 @@
 			<div class="row">
 				<div class="form-group col-xs-8">
 					<select id="city" class="form-control input-lg">
-						<option>Select Your City</option>
-						<option>Karachi</option>
-						<option>Islamabad</option>
-						<option>Rawalpindi</option>
-						<option>Lahore</option>
-						<option>Faisalabad</option>
-						<option>Gujranwala</option>
-						<option>Hyderabad</option>
+						<option {{isCurrentcity "none"}}>Select Your City</option>
+						<option {{isCurrentcity "Karachi"}}>Karachi</option>
+						<option {{isCurrentcity "Islamabad"}}>Islamabad</option>
+						<option {{isCurrentcity "Rawalpindi"}}>Rawalpindi</option>
+						<option {{isCurrentcity "Lahore"}}>Lahore</option>
+						<option {{isCurrentcity "Faisalabad"}}>Faisalabad</option>
+						<option {{isCurrentcity "Gujranwala"}}>Gujranwala</option>
+						<option {{isCurrentcity "Hyderabad"}}>Hyderabad</option>
 					</select>
 				</div>
 				<div class="form-group col-xs-4">
 					<select id="group" class="form-control input-lg">
-						<option>Select Your Blood Group</option>
-						<option value="A+">A+</option>
-						<option value="B+">B+</option>
-						<option value="AB+">AB+</option>
-						<option value="A-">A-</option>
-						<option value="B-">B-</option>
-						<option value="AB-">AB-</option>
-						<option value="O+">O+</option>
-						<option value="O-">O-</option>
+						<option {{isCurrentgroup "none"}} >Select Your Blood Group</option>
+						<option {{isCurrentgroup "A+"}} value="A+">A+</option>
+						<option {{isCurrentgroup "B+"}} value="B+">B+</option>
+						<option {{isCurrentgroup "AB+"}} value="AB+">AB+</option>
+						<option {{isCurrentgroup "A-"}} value="A-">A-</option>
+						<option {{isCurrentgroup "B-"}} value="B-">B-</option>
+						<option {{isCurrentgroup "AB-"}} value="AB-">AB-</option>
+						<option {{isCurrentgroup "O+"}} value="O+">O+</option>
+						<option {{isCurrentgroup "O-"}} value="O-">O-</option>
 					</select>						
 				</div>
 			</div>

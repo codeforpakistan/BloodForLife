@@ -12,8 +12,10 @@ Meteor.Router.add({
 			var city = query[1].split("=");
 			var group = query[0].split("=");
 			Session.set('results', donor.find({blood_group:group[1], city:city[1]}).fetch());
+			Session.set('params', this.querystring);
 		}else{
 			Session.set('results',null);
+			Session.set('params', this.querystring);
 		}
 		return 'search';	
 	},
@@ -38,7 +40,23 @@ Template.search.events({
 Template.search.helpers({
 	result : function() {
 		return Session.get('results');
-	}
+	},
+	isCurrentcity : function(string){
+		var query = Session.get('params').split("&");
+		var city = query[1].split("=");
+		if(string == city[1]){
+		   return 'selected';
+		}
+
+	},	
+	isCurrentgroup : function(string){
+		var query = Session.get('params').split("&");
+		var group = query[0].split("=");
+		if(string == group[1]){
+		   return 'selected';
+		}
+
+	},
 });
 Template.home.helpers({
 	notlogggedIn : function() {
@@ -50,6 +68,13 @@ Template.home.helpers({
 		if(Meteor.user() != null){
 			return 1;
 		}
+	},
+	
+});
+Template.home.events({
+	'click #search' : function(e,t){
+		e.preventDefault();
+		Meteor.Router.to('/search?group='+$("#group option:selected").val()+"&city="+$("#city option:selected").val());
 	}
 });
 Template.search.rendered = function(){
