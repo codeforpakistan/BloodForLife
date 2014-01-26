@@ -17,15 +17,19 @@ Meteor.Router.add({
 			Session.set('results',null);
 			Session.set('params', this.querystring);
 		}
+		$('html,body').animate({scrollTop:0}, 150);
 		return 'search';	
 	},
 	'/' : function(){
+		$('html,body').animate({scrollTop:0}, 150);
 		return 'home';
 	},
 	'/login': function() {
+		$('html,body').animate({scrollTop:0}, 150);
 		return 'login';
 	},
 	'/register': function() {
+		$('html,body').animate({scrollTop:0}, 150);
 		return 'register';
 	},
 	'*': 'not_found'
@@ -123,8 +127,6 @@ function humanise (diff) {
 	var str = '';
 	var values = {
 		' year': 365, 
-		' month': 30, 
-		' day': 1
 	};
 	for (var x in values) {
 			var amount = Math.floor(diff / values[x]);

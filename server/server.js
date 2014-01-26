@@ -54,7 +54,7 @@ Meteor.Router.add('/api/sms', 'POST', function() {
 	var curr_month = d.getMonth();
 	var curr_year = d.getFullYear();
 	var res = donor.find({blood_group:q[0] , city : q[1]}, {limit :5}).fetch();
-	var xml = '<Response><Sms>';
+	var xml = '<Response><Sms>'+string+' Donors: ';
 	for(i in res){
 		xml += res[i].full_name+' '+res[i].cell+String.fromCharCode(10);
 	}
